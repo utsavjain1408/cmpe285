@@ -1,0 +1,41 @@
+{% extends 'stock_app/base.html' %}
+{% load static %}
+
+{% block title %} Choose Strategy {% endblock %}
+
+{% block content %}
+
+      <div class="container">
+          <h1>Hello {{username}}</h1>
+    <h3>Select a strategy and investment amount</h3>
+
+    <form method="post" action="{% url 'confirm_stock' %}">
+            {% csrf_token %}
+            <label for="amount">Investment Amount($): </label>
+            <input type="number" name="amount" class="form-control" required="" min=5000 id="amount">
+    
+            <div>
+            <label for="primary_strategy">Select primary investment strategy: </label>
+            <label class="radio-inline"><input type="radio"  value="ethical" name="primary" checked>Ethical Investing</label>
+            <label class="radio-inline"><input type="radio" value="growth" name="primary">Growth Investing</label>
+            <label class="radio-inline"><input type="radio"  value="index" name="primary">Index Investing</label>
+            <label class="radio-inline"><input type="radio" value="quality" name="primary">Quality Investing</label>
+            <label class="radio-inline"><input type="radio" value="value" name="primary">Value Investing</label>
+            </div>
+
+            <div>
+            <label for="secondary_strategy">Select secondary investment strategy: </label>
+            <label class="radio-inline"><input type="radio" name="secondary" value="None" checked>None</label>
+            <label class="radio-inline"><input type="radio" name="secondary" value="ethical">Ethical Investing</label>
+            <label class="radio-inline"><input type="radio" name="secondary" value="growth">Growth Investing</label>
+            <label class="radio-inline"><input type="radio" name="secondary" value="index">Index Investing</label>
+            <label class="radio-inline"><input type="radio" name="secondary" value="quality">Quality Investing</label>
+            <label class="radio-inline"><input type="radio" name="secondary" value="value">Value Investing</label>
+            </div>
+    
+            <input  class="btn btn-primary" type="submit" value="Get stocks" />
+    
+        </form>
+    </div>
+    
+    {% endblock %}

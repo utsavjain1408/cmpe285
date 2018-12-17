@@ -1,0 +1,92 @@
+{% extends 'stock_app/base.html' %}
+{% load static %}
+
+{% block title %} About Us {% endblock %}
+
+
+{% block content %}
+<div class="bg">
+
+        {% if form.errors %}
+        <div class="alert alert-success">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            Your username and password didn't match. Please try again.
+        </div>
+        {% endif %}
+
+        {% for message in messages %}
+    <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message }}
+    </div>
+{% endfor %}
+
+    <div>
+        <div class="d-flex p-2">
+            <div class="container text-white display-4 align-items-center text-center">
+              <h1 class="text-white display-4 align-items-center text-center">
+                <div>
+                  Welcome
+                </div>
+                </h1>
+              <h3 class='text-white display-4 align-items-center text-center'>Invest in your future!!</h3>
+            </div>
+          </div>  
+      <div class="d-md-flex h-md-100 align-items-center">
+
+        <!-- First Half -->
+        
+        <div class="col-md-6 p-0 bg-indigo h-md-100">
+            <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
+                <div class="logoarea pt-5 pb-5">
+                   Login 
+                   <div class='d-flex p-2 bg-white-0.2 align-items-left'>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                          <div class="form-group">
+                            <label for="exampleInputEmail1"></label>
+                            <input name='username' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1"></label>
+                            <input name='password' type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                     </div>>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Second Half -->
+        
+        <div class="col-md-6 p-0 bg-indigo h-md-100">
+            <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
+                <div class="logoarea pt-5 pb-5">
+                   Sign Up 
+                   <div class='d-flex p-2 bg-white-0.2 align-items-left'>
+                    <form method="post" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                          <div class="form-group">
+                            <label for="exampleInputEmail1"></label>
+                            <input type="email" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1"></label>
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="exampleInputConfirmPassword1"></label>
+                              <input type="password" class="form-control" id="exampleInputConfirmEmail1" aria-describedby="emailHelp" placeholder="Password" required>
+                            </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                     </div>>
+                </div>
+            </div>
+        </div>
+            
+        </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'stock_app/base.html' %}
+{% load static %}
+
+{% block title %} Welcome {% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+            <script type="text/javascript">
+                    $(document).ready(function() {      
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        let stocks = JSON.parse('{{json_stocks|safe}}');
+                        let stock_data = [['Stock', 'No. of shares']];
+                        for(let i=0;i<stocks.length;i++){
+                            stock_data.push([stocks[i].name, stocks[i].amount]);
+                        }
+                        let portfolio_values = JSON.parse('{{json_history|safe}}');
+                        let portfolio_dates = JSON.parse('{{json_dates|safe}}');
+
+                        let portfolio_arr = [['Dates', 'Total Value($)']]
+                        for(let i=0;i<portfolio_values.length;i++){
+                            portfolio_arr.push([portfolio_dates[i], portfolio_values[i]]);
+                        }
+                        console.log(portfolio_arr);
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable(stock_data);
+                            var options = {'title':'No. of shares'};
+                            var chart = new google.visualization.PieChart(document.getElementById('stock_distribution'));
+                            chart.draw(data, options);
+
+                            var options = {
+                                    title: 'Performance History',
+                                    curveType: 'function',
+                                    legend: { position: 'bottom' }
+                                    };
+                            var portfolio_data = google.visualization.arrayToDataTable(portfolio_arr);
+                            var history_chart = new google.visualization.LineChart(document.getElementById('portfolio_history'));
+                            history_chart.draw(portfolio_data, options);
+
+                        }
+                    });
+            </script>
+{% endblock %} 
+
+{% block content %}
+
+<div class="container">
+    <h1>Hello, {{username}}! This is your portfolio.</h1>
+
+    <h3>Your stock distribution:</h3>
+
+    <div class="row">
+
+    <table class="table col-sm">
+            <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>No. of shares</th>
+                        <th>Value($)</th>
+                    </tr>
+            </thead>
+            <tbody>
+                    {% for stock in stocks %}
+
+                    <tr>
+                        <td>{{stock.name}}</td>
+                        <td>{{stock.amount}}</td>
+                        <td>{{stock.value}}</td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+
+    </table>
+    <div id='stock_distribution' class="col-sm"></div>
+</div>
+    <h3>Total Market Value: {{current_value}}</h3>
+
+    <h3>Portfolio History:</h3>
+
+    <div class="row">
+   
+    <table class="table col-sm">
+        <thead>
+            <tr>
+                {% for date in dates %}
+                  <th scope="col">{{date}}</th>
+                {% endfor %}
+            </tr>
+           
+        </thead>
+        <tbody>
+                <tr>
+                        {% for value in values %}
+                          <td>{{value}}</td>
+                        {% endfor %}
+                </tr>
+        </tbody>
+
+    </table>
+    <div id='portfolio_history' class="col-sm"/>
+</div>
+</div>
+
+{% endblock %}

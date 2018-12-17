@@ -1,0 +1,48 @@
+{% extends 'stock_app/base.html' %}
+{% load static %}
+
+{% block title %} Contact Us {% endblock %}
+
+
+{% block content %}
+<div class="bg">
+    <div id='main_container' class='container text-white bg-indigo text-center'>
+        <div>
+            <h2>Drop Us a Message</h2>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+
+
+            <form method="post" class="col-md-4 col-md-offset-4 centered">
+                 
+                    {% csrf_token %}
+                    <div class="form-group">
+                            <!-- <label for="InputName">Name</label> -->
+                            <input type="name" class="form-control" required id="InputName" placeholder="Your name">
+                    </div>
+
+                    <div class="form-group">
+                            <!-- <label for="InputEmail">Email address</label> -->
+                            <input type="email" class="form-control" required id="InputEmail" aria-describedby="emailHelp" placeholder="Your email">
+                            <!-- <small id="emailHelp" class="form-text text-muted">We'll reach back to this email.</small> -->
+                    </div>
+
+                    <div class="form-group">
+                            <!-- <label for="InputMessage">Enter message</label> -->
+                            <textarea type="message" class="form-control" required id="InputMessage" placeholder="Your message"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+     
+            </form>
+        </div>
+            {% if showThanks %}
+            <div>
+                Thanks for contacting us! Our Team will reach out to you soon :)
+            </div>
+            {% endif %}
+        
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'stock_app/base.html' %}
+{% load static %}
+
+{% block title %} Confirm stocks {% endblock %}
+
+{% block content %}
+
+        <div class="container">
+                <h1>Hello {{username}}</h1>
+    <h3>Please confirm the stock amounts to invest</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Stock</th>
+                <th scope="col">No. of shares</th>
+                <th scope="col">Price ($)</th>
+                <th scope="col">Value ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for stock in stocks %}
+
+            <tr>
+                <td>{{stock.name}}</td>
+                <td>{{stock.amount}}</td>
+                <td>{{stock.price}}</td>
+                <td>{{stock.value}}</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <h5>Total Investment amount: {{invested_amount}}</h5>
+        <h5>Residual amount: {{residual_amount}}</h5>
+
+        <div>
+        <form method='POST' action="{% url 'commit_stock' %}">
+            {% csrf_token %}
+            <input type='hidden' name="stocks" value="{{stocks}}"> </input>
+            <input type='hidden' name="invested_amount" value="{{invested_amount}}"> </input>
+            <div class="btn-group-justified">
+                    <input class="btn btn-primary" type="submit" value="Confirm" />
+                    <a class="btn btn-primary" href="{% url 'select_stock' %}" role="button">Cancel</a>
+            </div>
+        </form>
+        
+        </div>
+
+</div>
+
+{% endblock %}
